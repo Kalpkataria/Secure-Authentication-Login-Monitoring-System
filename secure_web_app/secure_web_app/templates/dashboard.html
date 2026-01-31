@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="card" style="width: 700px;">
+    <h2>Secure Auth Dashboard</h2>
+    <p class="center">Logged in as <b>{{ user }}</b></p>
+
+    <!-- SUMMARY CARDS -->
+    <div class="stats">
+        <div class="stat">
+            <h3>{{ total }}</h3>
+            <p>Total Logins</p>
+        </div>
+        <div class="stat">
+            <h3>{{ failed }}</h3>
+            <p>Failed Logins</p>
+        </div>
+        <div class="stat">
+            <h3>{{ last_ip }}</h3>
+            <p>Last Login IP</p>
+        </div>
+    </div>
+
+    <!-- SOC TABLE -->
+    <h3 style="margin-top:20px;">Login Activity (SOC Logs)</h3>
+
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Status</th>
+            <th>IP Address</th>
+            <th>Time</th>
+        </tr>
+
+        {% for log in logs %}
+        <tr>
+            <td>{{ log[0] }}</td>
+            <td class="{{ 'success' if log[1]=='SUCCESS' else 'error' }}">
+                {{ log[1] }}
+            </td>
+            <td>{{ log[2] }}</td>
+            <td>{{ log[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="actions">
+        <a href="/export" class="btn export">⬇ Export CSV</a>
+        <a href="/logout" class="btn logout">Logout</a>
+    </div>
+
+</div>
+

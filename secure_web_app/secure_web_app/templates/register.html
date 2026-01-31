@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="card">
+    <h2>Register</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+
+        <input type="password" name="password" id="password"
+               placeholder="Password" required minlength="6"
+               onkeyup="checkStrength()">
+
+        <p id="strength"></p>
+
+        <button>Register</button>
+    </form>
+
+    <p class="center">
+        Already registered? <a href="/login">Login</a>
+    </p>
+</div>
+
+<script>
+function checkStrength() {
+    let pwd = document.getElementById("password").value;
+    let strength = document.getElementById("strength");
+
+    if (pwd.length < 6) {
+        strength.textContent = "Weak password";
+        strength.style.color = "red";
+    } else if (pwd.match(/[A-Z]/) && pwd.match(/[0-9]/)) {
+        strength.textContent = "Strong password";
+        strength.style.color = "green";
+    } else {
+        strength.textContent = "Medium password";
+        strength.style.color = "orange";
+    }
+}
+</script>
